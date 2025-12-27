@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一份特别的信</title>
+    <style>
+        :root {
+            --bg-color: #f4f1ea; /* 柔和纸张色 */
+            --text-color: #4a4a4a;
+            --accent-color: #a8dadc;
+            --envelope-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            overflow: hidden;
+        }
+
+        /* 信封容器 */
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .envelope-wrapper:hover {
+            transform: translateY(-10px);
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: var(--envelope-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        /* 信封盖子 */
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            border-top: 110px solid #f9f9f9;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            transform-origin: top;
+            transition: transform 0.5s 0.3s;
+        }
+
+        /* 信封内部阴影 */
+        .envelope::after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            width: 0;
+            height: 0;
+            border-top: 100px solid transparent;
+            border-left: 150px solid #fff;
+            border-right: 150px solid #fff;
+            border-bottom: 100px solid #fff;
+            bottom: 0;
+        }
+
+        /* 信纸 */
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 280px;
+            height: 180px;
+            background: white;
+            z-index: 0;
+            transition: transform 0.8s ease, z-index 0s 0.4s;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.02);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .letter p {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 10px 0;
+            opacity: 0;
+            transition: opacity 1s 0.8s;
+        }
+
+        /* 激活状态 */
+        .envelope-wrapper.open .envelope::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .envelope-wrapper.open .letter {
+            transform: translateY(-150px);
+            z-index: 3;
+            height: auto;
+            min-height: 250px;
+        }
+
+        .envelope-wrapper.open .letter p {
+            opacity: 1;
+        }
+
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: #ffb5b5;
+            z-index: 4;
+            transform: translate(-50%, -20%) rotate(45deg);
+            transition: opacity 0.3s;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            width: 20px;
+            height: 20px;
+            background: #ffb5b5;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart::before { left: -10px; }
+        .heart::after { top: -10px; }
+
+        .envelope-wrapper.open .heart {
+            opacity: 0;
+        }
+
+        .hint {
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+            text-align: center;
+            color: #999;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="envelope-wrapper" onclick="this.classList.toggle('open')">
+    <div class="envelope">
+        <div class="heart"></div>
+    </div>
+    <div class="letter">
+        <p style="font-weight: bold; font-size: 1.1rem;">见字如面</p>
+        <p>其实想了很久该如何开口，<br>最后还是想借这封简短信件告诉你。</p>
+        <p>在实验室忙碌的代码里，<br>在每一个平凡的瞬间里，<br>我总会想到你。</p>
+        <p>如果你也刚好愿意，<br>未来的路，我们一起走好吗？</p>
+        <p style="margin-top: 20px; color: #ffb5b5;">❤️</p>
+    </div>
+    <div class="hint">点击开启</div>
+</div>
+
+</body>
+</html>
